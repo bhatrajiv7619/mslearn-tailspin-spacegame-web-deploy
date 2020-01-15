@@ -21,11 +21,18 @@ namespace Tailspin.SpaceGame.Web
         {
             configuration = config;
             connectionString = configuration.GetConnectionString("DefaultConnection");
+            //connectionString = "Data Source=tailspin-space-game-sql123.database.windows.net;Initial Catalog=tailspindatabase;User Id=azuresql;Password=password@123";
         }
 
         public Task<Profile> GetProfileAsync(string profileId)
         {
             Profile user = new Profile();
+            //SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            //builder.DataSource = "tailspin-space-game-sql123.database.windows.net";
+            //builder.UserID = "azuresql";
+            //builder.Password = "password@123";
+            //builder.InitialCatalog = "tailspindatabase";
+
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 string sql = string.Format("SELECT * FROM dbo.Profiles WHERE id = {0}", profileId);
@@ -73,6 +80,12 @@ namespace Tailspin.SpaceGame.Web
                 sql = String.Format("SELECT * FROM dbo.scores where gameMode = '{0}' ORDER BY score DESC offset {1} rows FETCH next {2} rows only", mode, pageSize * (page - 1), pageSize);
             if (!string.IsNullOrEmpty(mode) && !string.IsNullOrEmpty(region))
                 sql = String.Format("SELECT * FROM dbo.scores where gameMode = '{0}' and gameRegion = '{1}' ORDER BY score DESC offset {2} rows FETCH next {3} rows only", mode, region, pageSize * (page - 1), pageSize);
+            //SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            //builder.DataSource = "tailspin-space-game-sql123.database.windows.net";
+            //builder.UserID = "azuresql";
+            //builder.Password = "password@123";
+            //builder.InitialCatalog = "tailspindatabase";
+
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(sql, conn);
@@ -111,6 +124,12 @@ namespace Tailspin.SpaceGame.Web
                 sql = String.Format("SELECT count(*) FROM scores WHERE gameMode = '{0}'", mode);
             if (!string.IsNullOrEmpty(mode) && !string.IsNullOrEmpty(region))
                 sql = String.Format("SELECT count(*) FROM scores WHERE gameMode = '{0}' and gameRegion = '{1}'", mode, region);
+            //SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            //builder.DataSource = "tailspin-space-game-sql123.database.windows.net";
+            //builder.UserID = "azuresql";
+            //builder.Password = "password@123";
+            //builder.InitialCatalog = "tailspindatabase";
+
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(sql, conn);
